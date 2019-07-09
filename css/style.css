@@ -1,9 +1,18 @@
 .title {
+    font-family: 'Special Elite', cursive;
 
 }
+body {
+            font-family: 'Oswald', sans-serif;
 
+}
 .game-board {
     visibility: hidden;
+}
+
+.game-stats {
+    visibility: hidden;
+    display: inline-flex;
 }
 
 .response-section {

@@ -1,5 +1,5 @@
 // const categories = [Geography];
-
+const arrayOfFour = [1,2,3,4];
 class Questions {
     constructor(q,a,c,cat){
         this.question = q;
@@ -16,5 +16,6 @@ const question3 = new Questions("Ancient Rome was centered around what modern-da
 const question4 = new Questions("What is the name of the river in Baghdad, Iraq", ["Danube", "Tigris", "Thames", "Nile"], "Tigris", "Geography");
 const question5 = new Questions("Which country was neutral during World War II?", ["Switzerland", "France", "Germany", "Italy"], "Switzerland", "Geography");
 
-const questions = [question1, question2, question3]
+const questions = [question1, question2, question3, question4, question5]
 
+// console.log(question1.answers.sort(Math.random()));
