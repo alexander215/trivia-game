@@ -4,9 +4,11 @@ let newQuestionCorrectAnswer;
 
 // Launch the game, with the board hidden
 const hideBoard = document.querySelector('.game-board');
-hideBoard.style.visibility = "hidden";
+// hideBoard.style.visibility = "hidden";
 const hideResponse = document.querySelector('.response-section');
-hideResponse.style.visibility = "hidden";
+// hideResponse.style.visibility = "hidden";
+const hideNext = document.querySelector('.next-btn');
+// hideNext.style.visibility = "hidden";
 
 // Click the start button to load the questions
 const start = document.querySelector('button');
@@ -39,12 +41,14 @@ randomQuestion() {
 checkAnswer (chosenAnswer)  {
     if(chosenAnswer === newQuestionCorrectAnswer){
         const correctAnswer = document.querySelector('.response-section');
+        hideBoard.style.visibility = "hidden";
         correctAnswer.style.visibility = "visible";
         correctAnswer.innerText = "Correct!";
     } else {
         const wrongAnswer = document.querySelector('.response-section');
+        hideBoard.style.visibility = "hidden";
         wrongAnswer.style.visibility = "visible";
-        wrongAnswer.innerText = "Sorry, that's wrong!";
+        wrongAnswer.innerText = `Sorry, ${chosenAnswer} is wrong! The correct answer is ${newQuestionCorrectAnswer}.`;
 
     }
 

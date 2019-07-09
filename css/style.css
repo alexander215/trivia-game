@@ -1,9 +1,19 @@
 .title {
 
 }
+
 .game-board {
-    
+    visibility: hidden;
 }
+
+.response-section {
+    visibility: hidden;
+}
+
+.next-btn {
+    visibility: hidden;
+}
+
 .answers {
     display: inline-flex;
     flex-wrap: wrap;
