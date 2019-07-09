@@ -1,9 +1,3 @@
-// const questionsArray = [
-//     [
-// "What is the capital of California?", "Sacramento", "Los Angeles", "San Francisco", "San Diego"
-//     ]   
-// ]
-
 class Questions {
     constructor(q,a,c){
         this.question = q;

@@ -1,5 +1,8 @@
-// Launch the game, with the board hidden
+// Variables
+let newQuestionSelector;
+let newQuestionCorrectAnswer;
 
+// Launch the game, with the board hidden
 const hideBoard = document.querySelector('.game-board');
 hideBoard.style.visibility = "hidden";
 
@@ -12,12 +15,14 @@ start.addEventListener('click', () => {
 
 // Launch a question when the start button is clicked
 const askQuestion = () => {
+    newQuestionSelector = question1;
+    newQuestionCorrectAnswer = newQuestionSelector.correctAnswer;
     hideBoard.style.visibility = "visible";
     const questionDisplay = document.querySelector('.question');
-    questionDisplay.innerText = question1.question;
+    questionDisplay.innerText = newQuestionSelector.question;
     const answerDisplay = document.querySelectorAll(`.answers`);
     for (i = 0; i < 4; i++){
-        answerDisplay[i].innerText = question1.answers[i]
+        answerDisplay[i].innerText = newQuestionSelector.answers[i]
     }
 }
 
@@ -32,7 +37,7 @@ answersContainer.addEventListener('click', (e) => {
 checkAnswer = (num) => {
     // console.log((question1.correctAnswer), "<question1[correctAnswer");
     // console.log(num, "<--num");
-    if (parseInt(num) === (question1.correctAnswer)) {
+    if (parseInt(num) === (newQuestionCorrectAnswer)) {
         console.log("Correct!")
     } else {
         console.log("WRong!")
