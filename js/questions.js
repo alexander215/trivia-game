@@ -8,7 +8,7 @@ class Questions {
     constructor(q,a,c){
         this.question = q;
         this.answers = a;
-        this.correctAnswer= c;
+        this.correctAnswer = c;
     }
 }
 
