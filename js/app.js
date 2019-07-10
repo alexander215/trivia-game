@@ -8,7 +8,8 @@ let questionNumber = 0;
 let questionTime = 14;
 let player1;
 let opponent;
-// let playerScore = Player.score;
+let playerScore = 0;
+
 
 // Launch the game, with the board hidden
 const hideBoard = document.querySelector('.game-board');
@@ -19,10 +20,12 @@ const hideNext = document.querySelector('.next-btn');
 // hideNext.style.visibility = "hidden";
 const gameStats = document.querySelector('.game-stats');
 const roundNumber = document.querySelector('.round-number');
+const roundScorePlayer = document.querySelector('.round-score');
 const roundTimer = document.querySelector('.round-timer');
 const startSection = document.querySelector(`.start`);
 const infoPanel = document.querySelector('.info-panel');
 const startRoundButton = document.querySelector('.start-round-btn');
+
 
 // Click the start button to load the questions
 const startBtn = document.querySelector('.start-btn');
@@ -42,6 +45,12 @@ startRoundButton.addEventListener('click', () => {
     game.askQuestion();
 })
 
+const answersContainer = document.querySelector('.answers-container');
+answersContainer.addEventListener('click', (e) => {
+    game.checkAnswer(e.target.innerText);
+    
+})
+
 const game = {
 askQuestion() {
     questionNumber += 1;
@@ -49,6 +58,7 @@ askQuestion() {
     gameStats.style.visibility = "visible";
     roundTimer.innerText = `Time Left: ${questionTime + 1}`;
     roundNumber.innerText = `Round: ${currentRound}`;
+    roundScorePlayer.innerText = `Score: ${playerScore}`;
     newQuestionSelector = questions[this.randomQuestion()];
     newQuestionCorrectAnswer = newQuestionSelector.correctAnswer;
     hideBoard.style.visibility = "visible";
@@ -90,6 +100,8 @@ checkAnswer (chosenAnswer)  {
     hideBoard.style.visibility = "hidden";
     if(chosenAnswer === newQuestionCorrectAnswer){
         responseSectionHidden.innerText = "Correct!";
+        playerScore +=1;
+        roundScorePlayer.innerText = `Score: ${playerScore}`;
     } else {
         responseSectionHidden.innerText = `Sorry, ${chosenAnswer} is wrong! The correct answer is ${newQuestionCorrectAnswer}.`;
     }
@@ -101,13 +113,9 @@ checkAnswer (chosenAnswer)  {
         hideNext.style.visibility = "hidden";
     })
 
-}
+},
 }
 
-const answersContainer = document.querySelector('.answers-container');
-answersContainer.addEventListener('click', (e) => {
-    game.checkAnswer(e.target.innerText);
-})
 
 // randomAnswer() {
 //     let simpleArray = [1,2,3,4];
