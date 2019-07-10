@@ -10,6 +10,8 @@ let player1;
 let opponent;
 let playerScore = 0;
 let userClickedAnswer = false;
+let computerClickedAnswer = false;
+let computerDecision;
 
 
 // Launch the game, with the board hidden
@@ -33,6 +35,7 @@ const answerDisplay = document.querySelectorAll(`.answers`);
 const responseSectionHidden = document.querySelector('.response-section');
 const userResponse = document.querySelector('.user-response');
 const computerResponse = document.querySelector('.computer-response');
+const pointSummary = document.querySelector('.point-summary');
 
 
 
@@ -69,6 +72,7 @@ hideNext.addEventListener('click', (e) => {
     responseSectionHidden.style.visibility = "hidden";
     hideNext.style.visibility = "hidden";
     answersContainer.style.visibility = "visible";
+    userResponse.style.visibility = "hidden";
 
     
 })
@@ -77,6 +81,7 @@ const game = {
 askQuestion() {
     questionNumber += 1;
     userClickedAnswer = false;
+    computerClickedAnswer = false;
     questionTime = 14;
     console.log(questionNumber);
     gameStats.style.visibility = "visible";
@@ -115,11 +120,23 @@ setTimer() {
 
 computerChoice() {
     let computerChoiceTime = Math.floor(Math.random() * 14);
+    computerDecision = newQuestionSelector.answers[Math.floor(Math.random() * 4)];
     computerResponse.style.visibility = "visible";
     const compTimer = setInterval(() => {
-        if (computerChoiceTime === 0) {
+        if ((computerChoiceTime === 0) && (userClickedAnswer === true)) {
             clearTimeout(compTimer);
+            computerClickedAnswer = true;
+            computerResponse.innerText = `${opponent.name} has made its choice! It chose ${computerDecision}.`;
+            console.log(computerDecision, "<--computer chose after user chose");
+            hideNext.style.visibility = "visible";
+            
+        } else if ((computerChoiceTime === 0) && (userClickedAnswer === false)) {
+            clearTimeout(compTimer);
+            computerClickedAnswer = true;
             computerResponse.innerText = `${opponent.name} has made its choice!`;
+            console.log(computerDecision, "<--computer chose before user chose");
+            // userResponse.style.visibility = "visible";
+            
         } else {
             computerResponse.innerText = `${opponent.name} is thinking for ${computerChoiceTime} more seconds...`;
             computerChoiceTime -= 1;
@@ -137,16 +154,23 @@ randomQuestion() {
 checkAnswer (chosenAnswer)  {
     // hideBoard.style.visibility = "hidden";
     answersContainer.style.visibility = "hidden";
-    
-    if(chosenAnswer === newQuestionCorrectAnswer){
+    if((chosenAnswer === newQuestionCorrectAnswer) && (computerClickedAnswer === true)) {
+        userResponse.innerText = `Yes, ${chosenAnswer} is Correct!`;
+        computerResponse.innerText = `${opponent.name} has made its choice! It chose ${computerDecision}.`;
+        hideNext.style.visibility = "visible";
+    } else if((chosenAnswer === newQuestionCorrectAnswer) && (computerClickedAnswer === false)){
         userResponse.innerText = `Yes, ${chosenAnswer} is Correct!`;
         playerScore +=1;
         roundScorePlayer.innerText = `Score: ${playerScore}`;
-    } else {
+    } else if ((chosenAnswer !== newQuestionCorrectAnswer) && (computerClickedAnswer === true)){
+        userResponse.innerText = `Sorry, ${chosenAnswer} is wrong! The correct answer is ${newQuestionCorrectAnswer}.`;
+        computerResponse.innerText = `${opponent.name} has made its choice! It chose ${computerDecision}.`;
+        hideNext.style.visibility = "visible";
+    } else if ((chosenAnswer !== newQuestionCorrectAnswer) && (computerClickedAnswer === false)){
         userResponse.innerText = `Sorry, ${chosenAnswer} is wrong! The correct answer is ${newQuestionCorrectAnswer}.`;
     }
     userResponse.style.visibility = "visible";
-    hideNext.style.visibility = "visible";
+    // hideNext.style.visibility = "visible";
     
 },
 }
