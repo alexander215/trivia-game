@@ -31,6 +31,8 @@ const questionDisplay = document.querySelector('.question');
 const categoryDisplay = document.querySelector('.category');
 const answerDisplay = document.querySelectorAll(`.answers`);
 const responseSectionHidden = document.querySelector('.response-section');
+const userResponse = document.querySelector('.user-response');
+const computerResponse = document.querySelector('.computer-response');
 
 
 
@@ -56,6 +58,9 @@ const answersContainer = document.querySelector('.answers-container');
 answersContainer.addEventListener('click', (e) => {
     game.checkAnswer(e.target.innerText);
     userClickedAnswer = true;
+
+
+    // answersContainer.style.visibility = "hidden";
     
 })
 
@@ -63,6 +68,9 @@ hideNext.addEventListener('click', (e) => {
     game.askQuestion(e.target);
     responseSectionHidden.style.visibility = "hidden";
     hideNext.style.visibility = "hidden";
+    answersContainer.style.visibility = "visible";
+
+    
 })
 
 const game = {
@@ -80,25 +88,41 @@ askQuestion() {
     newQuestionCorrectAnswer = newQuestionSelector.correctAnswer;
     hideBoard.style.visibility = "visible";
     questionDisplay.innerText = newQuestionSelector.question;
-    categoryDisplay.innerText = "Category: " + newQuestionSelector.category;
+    // categoryDisplay.innerText = "Category: " + newQuestionSelector.category;
     // const array = [1,2,3,4];
     // let questionsRandom = [this.randomAnswer()],
     for (i = 0; i < 4; i++){
         answerDisplay[i].innerText = newQuestionSelector.answers[i]
     }
     this.setTimer();
+    this.computerChoice();
 },
 setTimer() {
     this.randomQuestion();
     const timer = setInterval(() => {
         roundTimer.innerText = `Time Left: ${questionTime}`;
-        console.log(questionTime);
+        // console.log(questionTime);
         questionTime -= 1;
         if (questionTime === 0) {
             clearTimeout(timer);
             roundTimer.innerText = `Time's up!`
         } else if (userClickedAnswer === true){
             clearTimeout(timer);
+        }
+    }, 1000)
+
+},
+
+computerChoice() {
+    let computerChoiceTime = Math.floor(Math.random() * 14);
+    computerResponse.style.visibility = "visible";
+    const compTimer = setInterval(() => {
+        if (computerChoiceTime === 0) {
+            clearTimeout(compTimer);
+            computerResponse.innerText = `${opponent.name} has made its choice!`;
+        } else {
+            computerResponse.innerText = `${opponent.name} is thinking for ${computerChoiceTime} more seconds...`;
+            computerChoiceTime -= 1;
         }
     }, 1000)
 
@@ -111,20 +135,19 @@ randomQuestion() {
 },
 
 checkAnswer (chosenAnswer)  {
-    hideBoard.style.visibility = "hidden";
+    // hideBoard.style.visibility = "hidden";
+    answersContainer.style.visibility = "hidden";
     
-    // questionTime = 14;
     if(chosenAnswer === newQuestionCorrectAnswer){
-        responseSectionHidden.innerText = "Correct!";
+        userResponse.innerText = `Yes, ${chosenAnswer} is Correct!`;
         playerScore +=1;
         roundScorePlayer.innerText = `Score: ${playerScore}`;
     } else {
-        responseSectionHidden.innerText = `Sorry, ${chosenAnswer} is wrong! The correct answer is ${newQuestionCorrectAnswer}.`;
+        userResponse.innerText = `Sorry, ${chosenAnswer} is wrong! The correct answer is ${newQuestionCorrectAnswer}.`;
     }
-    responseSectionHidden.style.visibility = "visible";
+    userResponse.style.visibility = "visible";
     hideNext.style.visibility = "visible";
     
-
 },
 }
 
