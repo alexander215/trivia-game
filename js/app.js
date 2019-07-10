@@ -9,9 +9,16 @@ let questionTime = 14;
 let player1;
 let opponent;
 let playerScore = 0;
+let computerScore = 0;
 let userClickedAnswer = false;
 let computerClickedAnswer = false;
 let computerDecision;
+let userChoseFirst = false;
+let userCorrect = false;
+let computerCorrect = false;
+let answersIn = 0;
+let userQuestionPoints = 0;
+let computerQuestionPoints = 0;
 
 
 // Launch the game, with the board hidden
@@ -38,7 +45,6 @@ const computerResponse = document.querySelector('.computer-response');
 const pointSummary = document.querySelector('.point-summary');
 
 
-
 // Click the start button to load the questions
 const startBtn = document.querySelector('.start-btn');
 // startBtn.style.display = "visible";
@@ -59,8 +65,11 @@ startRoundButton.addEventListener('click', () => {
 
 const answersContainer = document.querySelector('.answers-container');
 answersContainer.addEventListener('click', (e) => {
-    game.checkAnswer(e.target.innerText);
+    answersIn += 1;
     userClickedAnswer = true;
+    game.checkAnswer(e.target.innerText);
+    
+    
 
 
     // answersContainer.style.visibility = "hidden";
@@ -82,9 +91,16 @@ askQuestion() {
     questionNumber += 1;
     userClickedAnswer = false;
     computerClickedAnswer = false;
+    userChoseFirst = false;
+    userCorrect = false;
+    computerCorrect = false;
     questionTime = 14;
+    userQuestionPoints = 0;
+    computerQuestionPoints = 0;
+    answersIn = 0;
     console.log(questionNumber);
     gameStats.style.visibility = "visible";
+    pointSummary.style.visibility = "hidden";
     roundTimer.innerText = `Time Left: ${questionTime + 1}`;
     roundNumber.innerText = `Round: ${currentRound}`;
     questionNumberDisplay.innerText = `Question: ${questionNumber} of 5`;
@@ -129,6 +145,7 @@ computerChoice() {
             computerResponse.innerText = `${opponent.name} has made its choice! It chose ${computerDecision}.`;
             console.log(computerDecision, "<--computer chose after user chose");
             hideNext.style.visibility = "visible";
+            this.computerScoreUpdate();
             
         } else if ((computerChoiceTime === 0) && (userClickedAnswer === false)) {
             clearTimeout(compTimer);
@@ -136,12 +153,20 @@ computerChoice() {
             computerResponse.innerText = `${opponent.name} has made its choice!`;
             console.log(computerDecision, "<--computer chose before user chose");
             // userResponse.style.visibility = "visible";
+            this.computerScoreUpdate();
             
         } else {
             computerResponse.innerText = `${opponent.name} is thinking for ${computerChoiceTime} more seconds...`;
             computerChoiceTime -= 1;
         }
+        if (computerDecision === newQuestionCorrectAnswer){
+
+        }
     }, 1000)
+    if (computerDecision === newQuestionCorrectAnswer){
+        computerCorrect = true;
+            
+    }
 
 },
 
@@ -158,22 +183,61 @@ checkAnswer (chosenAnswer)  {
         userResponse.innerText = `Yes, ${chosenAnswer} is Correct!`;
         computerResponse.innerText = `${opponent.name} has made its choice! It chose ${computerDecision}.`;
         hideNext.style.visibility = "visible";
+        userCorrect = true;
     } else if((chosenAnswer === newQuestionCorrectAnswer) && (computerClickedAnswer === false)){
         userResponse.innerText = `Yes, ${chosenAnswer} is Correct!`;
-        playerScore +=1;
-        roundScorePlayer.innerText = `Score: ${playerScore}`;
+        userChoseFirst = true;
+        userCorrect = true;
+        // playerScore +=1;
+        // roundScorePlayer.innerText = `Score: ${playerScore}`;
     } else if ((chosenAnswer !== newQuestionCorrectAnswer) && (computerClickedAnswer === true)){
         userResponse.innerText = `Sorry, ${chosenAnswer} is wrong! The correct answer is ${newQuestionCorrectAnswer}.`;
         computerResponse.innerText = `${opponent.name} has made its choice! It chose ${computerDecision}.`;
         hideNext.style.visibility = "visible";
+        userCorrect = false;
     } else if ((chosenAnswer !== newQuestionCorrectAnswer) && (computerClickedAnswer === false)){
         userResponse.innerText = `Sorry, ${chosenAnswer} is wrong! The correct answer is ${newQuestionCorrectAnswer}.`;
+        userChoseFirst = true;
+        userCorrect = false;
     }
     userResponse.style.visibility = "visible";
     // hideNext.style.visibility = "visible";
-    
+    this.userScoreUpdate();
 },
+userScoreUpdate() {
+    if ((userCorrect === true) && (userChoseFirst === true)){
+        userQuestionPoints = 2;
+    } else if ((userCorrect === true)) {
+        userQuestionPoints = 1;
+    }
+    playerScore += userQuestionPoints;
+    if (answersIn === 2){
+        this.questionPointSummary();
+    }
+},
+computerScoreUpdate() {    
+    if ((computerCorrect === true) && (userChoseFirst === false)){
+        computerQuestionPoints = 2;
+    } else if (computerCorrect === true) {
+        computerQuestionPoints = 1;
+    }
+    computerScore += computerQuestionPoints;
+    answersIn += 1;
+    if (answersIn === 2){
+        this.questionPointSummary();
+    }
+
+},
+questionPointSummary() {
+    pointSummary.style.visibility = "visible";
+    if (userQuestionPoints === 1){
+    pointSummary.innerText = `You earned ${userQuestionPoints} point this round, and ${opponent.name} earned ${computerQuestionPoints}.`;
+    } else{
+    pointSummary.innerText = `You earned ${userQuestionPoints} points this round, and ${opponent.name} earned ${computerQuestionPoints}.`;
+    }
 }
+}
+
 
 
 // randomAnswer() {
