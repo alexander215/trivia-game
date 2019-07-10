@@ -9,6 +9,7 @@ let questionTime = 14;
 let player1;
 let opponent;
 let playerScore = 0;
+let userClickedAnswer = false;
 
 
 // Launch the game, with the board hidden
@@ -22,9 +23,15 @@ const gameStats = document.querySelector('.game-stats');
 const roundNumber = document.querySelector('.round-number');
 const roundScorePlayer = document.querySelector('.round-score');
 const roundTimer = document.querySelector('.round-timer');
+const questionNumberDisplay = document.querySelector('.question-number');
 const startSection = document.querySelector(`.start`);
 const infoPanel = document.querySelector('.info-panel');
 const startRoundButton = document.querySelector('.start-round-btn');
+const questionDisplay = document.querySelector('.question');
+const categoryDisplay = document.querySelector('.category');
+const answerDisplay = document.querySelectorAll(`.answers`);
+const responseSectionHidden = document.querySelector('.response-section');
+
 
 
 // Click the start button to load the questions
@@ -48,12 +55,15 @@ startRoundButton.addEventListener('click', () => {
 const answersContainer = document.querySelector('.answers-container');
 answersContainer.addEventListener('click', (e) => {
     game.checkAnswer(e.target.innerText);
+    userClickedAnswer = true;
     
 })
 
 const game = {
 askQuestion() {
     questionNumber += 1;
+    userClickedAnswer = false;
+    questionTime = 14;
     console.log(questionNumber);
     gameStats.style.visibility = "visible";
     roundTimer.innerText = `Time Left: ${questionTime + 1}`;
@@ -62,11 +72,8 @@ askQuestion() {
     newQuestionSelector = questions[this.randomQuestion()];
     newQuestionCorrectAnswer = newQuestionSelector.correctAnswer;
     hideBoard.style.visibility = "visible";
-    const questionDisplay = document.querySelector('.question');
     questionDisplay.innerText = newQuestionSelector.question;
-    const categoryDisplay = document.querySelector('.category');
     categoryDisplay.innerText = "Category: " + newQuestionSelector.category;
-    const answerDisplay = document.querySelectorAll(`.answers`);
     const array = [1,2,3,4];
     // let questionsRandom = [this.randomAnswer()],
     for (i = 0; i < 4; i++){
@@ -78,12 +85,14 @@ setTimer() {
     this.randomQuestion();
     const timer = setInterval(() => {
         roundTimer.innerText = `Time Left: ${questionTime}`;
-
         console.log(questionTime);
         questionTime -= 1;
         if (questionTime === 0) {
             clearTimeout(timer);
-            roundTimer.innerText = `Time Left: Time's up!`
+            roundTimer.innerText = `Time's up!`
+            // questionTime = 14;
+        } else if (userClickedAnswer === true){
+            clearTimeout(timer);
         }
     }, 1000)
 
@@ -96,8 +105,9 @@ randomQuestion() {
 },
 
 checkAnswer (chosenAnswer)  {
-    const responseSectionHidden = document.querySelector('.response-section');
     hideBoard.style.visibility = "hidden";
+    
+    // questionTime = 14;
     if(chosenAnswer === newQuestionCorrectAnswer){
         responseSectionHidden.innerText = "Correct!";
         playerScore +=1;
