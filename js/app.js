@@ -59,6 +59,12 @@ answersContainer.addEventListener('click', (e) => {
     
 })
 
+hideNext.addEventListener('click', (e) => {
+    game.askQuestion(e.target);
+    responseSectionHidden.style.visibility = "hidden";
+    hideNext.style.visibility = "hidden";
+})
+
 const game = {
 askQuestion() {
     questionNumber += 1;
@@ -68,13 +74,14 @@ askQuestion() {
     gameStats.style.visibility = "visible";
     roundTimer.innerText = `Time Left: ${questionTime + 1}`;
     roundNumber.innerText = `Round: ${currentRound}`;
+    questionNumberDisplay.innerText = `Question: ${questionNumber} of 5`;
     roundScorePlayer.innerText = `Score: ${playerScore}`;
     newQuestionSelector = questions[this.randomQuestion()];
     newQuestionCorrectAnswer = newQuestionSelector.correctAnswer;
     hideBoard.style.visibility = "visible";
     questionDisplay.innerText = newQuestionSelector.question;
     categoryDisplay.innerText = "Category: " + newQuestionSelector.category;
-    const array = [1,2,3,4];
+    // const array = [1,2,3,4];
     // let questionsRandom = [this.randomAnswer()],
     for (i = 0; i < 4; i++){
         answerDisplay[i].innerText = newQuestionSelector.answers[i]
@@ -90,7 +97,6 @@ setTimer() {
         if (questionTime === 0) {
             clearTimeout(timer);
             roundTimer.innerText = `Time's up!`
-            // questionTime = 14;
         } else if (userClickedAnswer === true){
             clearTimeout(timer);
         }
@@ -117,11 +123,7 @@ checkAnswer (chosenAnswer)  {
     }
     responseSectionHidden.style.visibility = "visible";
     hideNext.style.visibility = "visible";
-    hideNext.addEventListener('click', (e) => {
-        this.askQuestion(e.target);
-        responseSectionHidden.style.visibility = "hidden";
-        hideNext.style.visibility = "hidden";
-    })
+    
 
 },
 }
