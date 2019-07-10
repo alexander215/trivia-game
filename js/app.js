@@ -3,8 +3,12 @@ let newQuestionSelector;
 let newQuestionCorrectAnswer;
 let numberOfRounds = 3;
 let currentRound = 1;
+let questionNumber = 0;
 //set question time one second shorter than desired
 let questionTime = 14;
+let player1;
+let opponent;
+// let playerScore = Player.score;
 
 // Launch the game, with the board hidden
 const hideBoard = document.querySelector('.game-board');
@@ -16,28 +20,32 @@ const hideNext = document.querySelector('.next-btn');
 const gameStats = document.querySelector('.game-stats');
 const roundNumber = document.querySelector('.round-number');
 const roundTimer = document.querySelector('.round-timer');
+const startSection = document.querySelector(`.start`);
+const infoPanel = document.querySelector('.info-panel');
+const startRoundButton = document.querySelector('.start-round-btn');
 
 // Click the start button to load the questions
-const start = document.querySelector('.start-btn');
-start.addEventListener('click', () => {
-    const hideStartButton = document.querySelector('.start-btn');
-    hideStartButton.style.visibility = "hidden";
-    // console.log("Start button clicked.")
+const startBtn = document.querySelector('.start-btn');
+// startBtn.style.display = "visible";
+startBtn.addEventListener('click', () => {
+    startBtn.style.display = "none";
+    player1 = prompt(`Hello Player 1, what is your name?`);
+    player1 = new Player(player1);
+    opponent = "The Evil Computer";
+    opponent = new Computer(opponent);
+    infoPanel.innerText = `Welcome ${player1.name}. You will be competing with ${opponent.name}.`;
+    startRoundButton.style.visibility = "visible";
+    startRoundButton.innerText = "Begin Round 1";
+})
+startRoundButton.addEventListener('click', () => {
+    startRoundButton.style.visibility = "hidden";
     game.askQuestion();
-
 })
 
 const game = {
-// round() {
-//     for (let i = 1; i <= numberOfRounds; i++) {
-//         currentRound = (i - 1);
-        
-//         console.log(currentRound);
-//         this.askQuestion();
-//     }
-// },
-// Launch a question when the start button is clicked
 askQuestion() {
+    questionNumber += 1;
+    console.log(questionNumber);
     gameStats.style.visibility = "visible";
     roundTimer.innerText = `Time Left: ${questionTime + 1}`;
     roundNumber.innerText = `Round: ${currentRound}`;

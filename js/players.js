@@ -6,8 +6,8 @@ class Player {
 }
 
 class Computer {
-    constructor(){
-    this.name = "Your Opponent";
+    constructor(opponent){
+    this.name = opponent;
     this.score = 0;
     }
 }
