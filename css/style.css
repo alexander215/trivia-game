@@ -3,7 +3,8 @@
 
 }
 body {
-            font-family: 'Oswald', sans-serif;
+    font-family: 'Oswald', sans-serif;
+    
 
 }
 .game-board {
@@ -13,6 +14,7 @@ body {
 .game-stats {
     visibility: hidden;
     display: inline-flex;
+    /* justify-content: flex-end; */
 }
 
 .response-section {
@@ -23,6 +25,9 @@ body {
     visibility: hidden;
 }
 
+/* .question {
+    font: h2;
+} */
 .answers {
     display: inline-flex;
     flex-wrap: wrap;
