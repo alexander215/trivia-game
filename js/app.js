@@ -88,6 +88,19 @@ hideNext.addEventListener('click', (e) => {
 
 const game = {
 askQuestion() {
+    pointSummary.style.visibility = "hidden";
+    if (questionNumber === 1){
+        questionNumber = 0;
+        hideBoard.style.visibility = "visible";
+        computerResponse.style.visibility = "hidden";
+        if (playerScore === 1) {
+        hideBoard.innerText = `Round ${currentRound} is over. You earned ${playerScore} point, and ${opponent.name} earned ${computerScore}.`;
+        } else {
+            (hideBoard.innerText = `Round ${currentRound} is over. You earned ${playerScore} points, and ${opponent.name} earned ${computerScore}.`;)
+    }
+
+
+    } else {
     questionNumber += 1;
     userClickedAnswer = false;
     computerClickedAnswer = false;
@@ -100,7 +113,6 @@ askQuestion() {
     answersIn = 0;
     console.log(questionNumber);
     gameStats.style.visibility = "visible";
-    pointSummary.style.visibility = "hidden";
     roundTimer.innerText = `Time Left: ${questionTime + 1}`;
     roundNumber.innerText = `Round: ${currentRound}`;
     questionNumberDisplay.innerText = `Question: ${questionNumber} of 5`;
@@ -117,6 +129,7 @@ askQuestion() {
     }
     this.setTimer();
     this.computerChoice();
+}
 },
 setTimer() {
     this.randomQuestion();
