@@ -18,7 +18,10 @@ body {
 .game-board {
     visibility: hidden;
 }
-
+.total-score {
+    display: flex;
+    justify-content: flex-end;
+}
 .game-stats {
     visibility: hidden;
     display: flex;

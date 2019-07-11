@@ -43,7 +43,8 @@ const responseSectionHidden = document.querySelector('.response-section');
 const userResponse = document.querySelector('.user-response');
 const computerResponse = document.querySelector('.computer-response');
 const pointSummary = document.querySelector('.point-summary');
-
+const playerScoreboard = document.querySelector('.player-score');
+const opponentScoreboard = document.querySelector('.opponent-score');
 
 // Click the start button to load the questions
 const startBtn = document.querySelector('.start-btn');
@@ -56,10 +57,12 @@ startBtn.addEventListener('click', () => {
     opponent = new Computer(opponent);
     infoPanel.innerText = `Welcome ${player1.name}. You will be competing with ${opponent.name}.`;
     startRoundButton.style.visibility = "visible";
-    startRoundButton.innerText = "Begin Round 1";
+    startRoundButton.innerText = `Begin Round ${currentRound}`;
 })
 startRoundButton.addEventListener('click', () => {
     startRoundButton.style.visibility = "hidden";
+    answersContainer.style.visibility = "visible";
+    userResponse.style.visibility = "hidden";
     game.askQuestion();
 })
 
@@ -68,12 +71,6 @@ answersContainer.addEventListener('click', (e) => {
     answersIn += 1;
     userClickedAnswer = true;
     game.checkAnswer(e.target.innerText);
-    
-    
-
-
-    // answersContainer.style.visibility = "hidden";
-    
 })
 
 hideNext.addEventListener('click', (e) => {
@@ -81,6 +78,8 @@ hideNext.addEventListener('click', (e) => {
     responseSectionHidden.style.visibility = "hidden";
     hideNext.style.visibility = "hidden";
     answersContainer.style.visibility = "visible";
+    // answersContainer.style.visibility = "hidden";
+
     userResponse.style.visibility = "hidden";
 
     
@@ -89,18 +88,34 @@ hideNext.addEventListener('click', (e) => {
 const game = {
 askQuestion() {
     pointSummary.style.visibility = "hidden";
-    if (questionNumber === 1){
+    // if (questionNumber === 2){
+    //     answersContainer.style.visibility = "hidden";
+    //     questionNumber = 0;
+    //     // hideNext.style.visibility = "hidden";
+    //     pointSummary.style.visibility = "visible";
+    //     computerResponse.style.visibility = "hidden";
+    //     hideBoard.style.visibility = "hidden";
+    //     console.log("can you see me?");
+    //     if (playerScore === 1) {
+    //         pointSummary.innerText = `Round ${currentRound} is over. You earned ${playerScore} point, and ${opponent.name} earned ${computerScore}.`;
+    //     } else {
+    //         pointSummary.innerText = `Round ${currentRound} is over. You earned ${playerScore} points, and ${opponent.name} earned ${computerScore}.`;
+    //     }
+    //     currentRound += 1;
+    //     startRoundButton.style.visibility = "visible";
+    //     startRoundButton.innerText = `Begin Round ${currentRound}`;
+    // } else 
+    if (currentRound === 5) {
         questionNumber = 0;
         hideBoard.style.visibility = "visible";
         computerResponse.style.visibility = "hidden";
         if (playerScore === 1) {
-        hideBoard.innerText = `Round ${currentRound} is over. You earned ${playerScore} point, and ${opponent.name} earned ${computerScore}.`;
+            pointSummary.innerText = `GAME OVER! Round ${currentRound} is over. You earned ${playerScore} point, and ${opponent.name} earned ${computerScore}.`;
         } else {
-            (hideBoard.innerText = `Round ${currentRound} is over. You earned ${playerScore} points, and ${opponent.name} earned ${computerScore}.`;)
-    }
-
-
+            pointSummary.innerText = `GAME OVER! Round ${currentRound} is over. You earned ${playerScore} points, and ${opponent.name} earned ${computerScore}.`;
+        }
     } else {
+    console.log(`rrrround ${currentRound}`)
     questionNumber += 1;
     userClickedAnswer = false;
     computerClickedAnswer = false;
@@ -138,22 +153,23 @@ setTimer() {
         // console.log(questionTime);
         questionTime -= 1;
         if (questionTime === 0) {
-            clearTimeout(timer);
-            roundTimer.innerText = `Time's up!`
+            clearInterval(timer);
+            roundTimer.innerText = `Time's up!`;
+            this.checkAnswer('timeUp');
         } else if (userClickedAnswer === true){
-            clearTimeout(timer);
+            clearInterval(timer);
         }
     }, 1000)
 
 },
 
 computerChoice() {
-    let computerChoiceTime = Math.floor(Math.random() * 14);
+    let computerChoiceTime = Math.floor(Math.random() * 4);
     computerDecision = newQuestionSelector.answers[Math.floor(Math.random() * 4)];
     computerResponse.style.visibility = "visible";
     const compTimer = setInterval(() => {
         if ((computerChoiceTime === 0) && (userClickedAnswer === true)) {
-            clearTimeout(compTimer);
+            clearInterval(compTimer);
             computerClickedAnswer = true;
             computerResponse.innerText = `${opponent.name} has made its choice! It chose ${computerDecision}.`;
             console.log(computerDecision, "<--computer chose after user chose");
@@ -161,7 +177,7 @@ computerChoice() {
             this.computerScoreUpdate();
             
         } else if ((computerChoiceTime === 0) && (userClickedAnswer === false)) {
-            clearTimeout(compTimer);
+            clearInterval(compTimer);
             computerClickedAnswer = true;
             computerResponse.innerText = `${opponent.name} has made its choice!`;
             console.log(computerDecision, "<--computer chose before user chose");
@@ -191,8 +207,13 @@ randomQuestion() {
 
 checkAnswer (chosenAnswer)  {
     // hideBoard.style.visibility = "hidden";
-    answersContainer.style.visibility = "hidden";
-    if((chosenAnswer === newQuestionCorrectAnswer) && (computerClickedAnswer === true)) {
+    // answersContainer.style.visibility = "hidden";
+    if (chosenAnswer === 'timeUp'){
+        userResponse.innerText = `Oops, you ran out of time!`;
+        computerResponse.innerText = `${opponent.name} has made its choice! It chose ${computerDecision}.`;
+        userCorrect = false;
+        hideNext.style.visibility = "visible";
+    } else if((chosenAnswer === newQuestionCorrectAnswer) && (computerClickedAnswer === true)) {
         userResponse.innerText = `Yes, ${chosenAnswer} is Correct!`;
         computerResponse.innerText = `${opponent.name} has made its choice! It chose ${computerDecision}.`;
         hideNext.style.visibility = "visible";
@@ -243,11 +264,36 @@ computerScoreUpdate() {
 },
 questionPointSummary() {
     pointSummary.style.visibility = "visible";
-    if (userQuestionPoints === 1){
-    pointSummary.innerText = `You earned ${userQuestionPoints} point this round, and ${opponent.name} earned ${computerQuestionPoints}.`;
+    if (questionNumber === 2){
+        answersContainer.style.visibility = "hidden";
+        questionNumber = 0;
+        hideNext.style.visibility = "hidden";
+        pointSummary.style.visibility = "visible";
+        computerResponse.style.visibility = "hidden";
+        hideBoard.style.visibility = "hidden";
+        if (playerScore > computerScore){
+            player1.score += 1;
+            playerScoreboard.innerText = `You: ${player1.score}`;
+        } else if (computerScore > playerScore){
+            opponent.score += 1;
+            opponentScoreboard.innerText = `Opponent: ${opponent.score}`;
+        };
+        console.log(player1.score, "<player 1.score");
+        console.log(opponent.score, "<opponent.score");
+        if (playerScore === 1) {
+            pointSummary.innerText = `Round ${currentRound} is over. You earned ${playerScore} point, and ${opponent.name} earned ${computerScore}.`;
+        } else {
+            pointSummary.innerText = `Round ${currentRound} is over. You earned ${playerScore} points, and ${opponent.name} earned ${computerScore}.`;
+        }
+        currentRound += 1;
+        startRoundButton.style.visibility = "visible";
+        startRoundButton.innerText = `Begin Round ${currentRound}`;
+    } else if (userQuestionPoints === 1){
+    pointSummary.innerText = `You earned ${userQuestionPoints} point this question, and ${opponent.name} earned ${computerQuestionPoints}.`;
     } else{
-    pointSummary.innerText = `You earned ${userQuestionPoints} points this round, and ${opponent.name} earned ${computerQuestionPoints}.`;
+    pointSummary.innerText = `You earned ${userQuestionPoints} points this question, and ${opponent.name} earned ${computerQuestionPoints}.`;
     }
+    
 }
 }
 
