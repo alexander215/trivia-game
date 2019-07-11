@@ -11,3 +11,7 @@ class Computer {
     this.score = 0;
     }
 }
+
+
+
+const opponentNames = ["The Evil Computer", "The Futuristic Robot", "The Smart Microwave"];

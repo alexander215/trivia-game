@@ -53,7 +53,9 @@ startBtn.addEventListener('click', () => {
     startBtn.style.display = "none";
     player1 = prompt(`Hello Player 1, what is your name?`);
     player1 = new Player(player1);
-    opponent = "The Evil Computer";
+    // opponent = "The Evil Computer";
+    opponent = opponentNames[Math.floor(Math.random() * opponentNames.length)];
+    // opponentNames.splice(oppenentNames.indexOf(opponent), 1);
     opponent = new Computer(opponent);
     infoPanel.innerText = `Welcome ${player1.name}. You will be competing with ${opponent.name}.`;
     startRoundButton.style.visibility = "visible";
@@ -107,13 +109,15 @@ askQuestion() {
     // } else 
     if (currentRound === 5) {
         questionNumber = 0;
+        console.log("this is round 5")
         hideBoard.style.visibility = "visible";
-        computerResponse.style.visibility = "hidden";
-        if (playerScore === 1) {
-            pointSummary.innerText = `GAME OVER! Round ${currentRound} is over. You earned ${playerScore} point, and ${opponent.name} earned ${computerScore}.`;
-        } else {
-            pointSummary.innerText = `GAME OVER! Round ${currentRound} is over. You earned ${playerScore} points, and ${opponent.name} earned ${computerScore}.`;
-        }
+        hideBoard.innerText = "Game over!";
+        // computerResponse.style.visibility = "hidden";
+        // if (playerScore === 1) {
+        //     pointSummary.innerText = `GAME OVER! Round ${currentRound} is over. You earned ${playerScore} point, and ${opponent.name} earned ${computerScore}.`;
+        // } else {
+        //     pointSummary.innerText = `GAME OVER! Round ${currentRound} is over. You earned ${playerScore} points, and ${opponent.name} earned ${computerScore}.`;
+        // }
     } else {
     console.log(`rrrround ${currentRound}`)
     questionNumber += 1;
@@ -286,6 +290,7 @@ questionPointSummary() {
             pointSummary.innerText = `Round ${currentRound} is over. You earned ${playerScore} points, and ${opponent.name} earned ${computerScore}.`;
         }
         currentRound += 1;
+        playerScore = 0;
         startRoundButton.style.visibility = "visible";
         startRoundButton.innerText = `Begin Round ${currentRound}`;
     } else if (userQuestionPoints === 1){
