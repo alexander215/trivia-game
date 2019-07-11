@@ -19,6 +19,7 @@ let computerCorrect = false;
 let answersIn = 0;
 let userQuestionPoints = 0;
 let computerQuestionPoints = 0;
+let winner;
 
 
 // Launch the game, with the board hidden
@@ -51,7 +52,8 @@ const startBtn = document.querySelector('.start-btn');
 // startBtn.style.display = "visible";
 startBtn.addEventListener('click', () => {
     startBtn.style.display = "none";
-    player1 = prompt(`Hello Player 1, what is your name?`);
+    // player1 = prompt(`Hello Player 1, what is your name?`);
+    player1 = "Player 1";
     player1 = new Player(player1);
     // opponent = "The Evil Computer";
     opponent = opponentNames[Math.floor(Math.random() * opponentNames.length)];
@@ -90,28 +92,21 @@ hideNext.addEventListener('click', (e) => {
 const game = {
 askQuestion() {
     pointSummary.style.visibility = "hidden";
-    // if (questionNumber === 2){
-    //     answersContainer.style.visibility = "hidden";
-    //     questionNumber = 0;
-    //     // hideNext.style.visibility = "hidden";
-    //     pointSummary.style.visibility = "visible";
-    //     computerResponse.style.visibility = "hidden";
-    //     hideBoard.style.visibility = "hidden";
-    //     console.log("can you see me?");
-    //     if (playerScore === 1) {
-    //         pointSummary.innerText = `Round ${currentRound} is over. You earned ${playerScore} point, and ${opponent.name} earned ${computerScore}.`;
-    //     } else {
-    //         pointSummary.innerText = `Round ${currentRound} is over. You earned ${playerScore} points, and ${opponent.name} earned ${computerScore}.`;
-    //     }
-    //     currentRound += 1;
-    //     startRoundButton.style.visibility = "visible";
-    //     startRoundButton.innerText = `Begin Round ${currentRound}`;
-    // } else 
-    if (currentRound === 5) {
+    if (currentRound === 6) {
         questionNumber = 0;
-        console.log("this is round 5")
+        console.log("this is round 6")
         hideBoard.style.visibility = "visible";
-        hideBoard.innerText = "Game over!";
+        if (player1.score > opponent.score){
+            winner = player1.name;
+            hideBoard.innerText = `Game over! ${player1.name} wins ${player1.score} to ${opponent.score}!`;
+        } else if (opponent.score > player1.score) {
+            winner = opponent.name;
+            hideBoard.innerText = `Game over! ${opponent.name} wins ${opponent.score} to ${player1.score}!`;
+        } else{
+            hideBoard.innerText = `Well look at that, the game was a tie! ${player1.score} to ${opponent.score}!`;
+
+        }
+        
         // computerResponse.style.visibility = "hidden";
         // if (playerScore === 1) {
         //     pointSummary.innerText = `GAME OVER! Round ${currentRound} is over. You earned ${playerScore} point, and ${opponent.name} earned ${computerScore}.`;
@@ -168,7 +163,7 @@ setTimer() {
 },
 
 computerChoice() {
-    let computerChoiceTime = Math.floor(Math.random() * 4);
+    let computerChoiceTime = Math.floor(Math.random() * 14);
     computerDecision = newQuestionSelector.answers[Math.floor(Math.random() * 4)];
     computerResponse.style.visibility = "visible";
     const compTimer = setInterval(() => {
@@ -204,7 +199,7 @@ computerChoice() {
 },
 
 randomQuestion() {
-    let random = Math.floor(Math.random() * (questions.length - 1))
+    let random = Math.floor(Math.random() * (questions.length))
     return random;
 
 },
@@ -268,7 +263,7 @@ computerScoreUpdate() {
 },
 questionPointSummary() {
     pointSummary.style.visibility = "visible";
-    if (questionNumber === 2){
+    if (questionNumber === 5){
         answersContainer.style.visibility = "hidden";
         questionNumber = 0;
         hideNext.style.visibility = "hidden";
@@ -291,6 +286,7 @@ questionPointSummary() {
         }
         currentRound += 1;
         playerScore = 0;
+        computerScore = 0;
         startRoundButton.style.visibility = "visible";
         startRoundButton.innerText = `Begin Round ${currentRound}`;
     } else if (userQuestionPoints === 1){

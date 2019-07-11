@@ -15,7 +15,18 @@ const question2 = new Questions("How many continents are there?", ["4", "1", "7"
 const question3 = new Questions("Ancient Rome was centered around what modern-day country?", ["Romeland", "Italy", "Romania", "Germany"], "Italy", "Geography");
 const question4 = new Questions("What is the name of the river in Baghdad, Iraq", ["Danube", "Tigris", "Thames", "Nile"], "Tigris", "Geography");
 const question5 = new Questions("Which country was neutral during World War II?", ["Switzerland", "France", "Germany", "Italy"], "Switzerland", "Geography");
+const question6 = new Questions("Who was the first pilot to take a solo, non-stop flight across the Atlantic?", ["Captain Crunch", "Amelia Earhart", "Eddie Rickenbacker", "Charles Lindbergh"], "Charles Lindbergh", "People");
+const question7 = new Questions("What was the name of the Russian royal family overthrown in the 1917 revolution?", ["Romanov", "Russianov", "Smirnov", "Petrov"], "Romanov", "People");
+const question8 = new Questions("What was the name of the ship Charles Darwin traveled aboard?", ["The Bird", "Evolution", "The Beagle", "The Darwin"], "The Beagle", "Science");
+const question9 = new Questions("Who was the first president of the United States?", ["Abraham Lincoln", "George Washington", "John F. Kennedy", "John Adams"], "George Washington", "People");
+const question10 = new Questions("In what year did Neil Armstrong walk on the moon?", ["1969", "1960", "1976", "1945"], "1969", "Dates");
+const question11 = new Questions("Which is not considered to be one of the Seven Wonders of the Ancient World?", ["The Great Pyramid of Giza", "The Lighthouse of Alexandria", "The Hanging Gardens of Babylon", "The Colosseum of Rome"], "The Colosseum of Rome", "Places");
+const question12 = new Questions("What year did the Titanic sink?", ["1900", "1912", "1918", "1945"], "1912", "Dates");
+const question13 = new Questions("What year did the UK hand sovereignty of Hong Kong to China?", ["1776", "1865", "1956", "1997"], "1997", "Dates");
+const question14 = new Questions("Who was Britain’s first female prime minister?", ["Margaret Thatcher", "Queen Elizabeth I", "Theresa May", "Princess Diana"], "Margaret Thatcher", "People");
+const question15 = new Questions("Who was not an original member of The Beatles?", ["John Lennon", "Paul McCartney", "George Harrison", "Ringo Star"], "Ringo Star", "People");
 
-const questions = [question1, question2, question3, question4, question5]
+const questions = [question1, question2, question3, question4, question5, question6, question7, question8, question9, question10, question11, question12, question13, question14, question15]
 
 // console.log(question1.answers.sort(Math.random()));
+// categories: geography, people, dates, science, places
