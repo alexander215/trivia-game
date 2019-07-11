@@ -46,6 +46,13 @@ const computerResponse = document.querySelector('.computer-response');
 const pointSummary = document.querySelector('.point-summary');
 const playerScoreboard = document.querySelector('.player-score');
 const opponentScoreboard = document.querySelector('.opponent-score');
+const subtitle = document.querySelector('.subtitle');
+const nameInput = document.querySelector('.name-input');
+const nameInputBox = document.querySelector('#user-input-name');
+const nameBtn = document.querySelector('.name-btn');
+const scoreboard = document.querySelector('.scoreboard');
+console.log(scoreboard);
+
 
 // Click the start button to load the questions
 const startBtn = document.querySelector('.start-btn');
@@ -53,7 +60,14 @@ const startBtn = document.querySelector('.start-btn');
 startBtn.addEventListener('click', () => {
     startBtn.style.display = "none";
     // player1 = prompt(`Hello Player 1, what is your name?`);
-    player1 = "Player 1";
+    nameInput.style.visibility = "visible";
+    // player1 = "Player 1";
+})
+
+nameBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    nameInput.style.display = "none";
+    player1 = nameInputBox.value;
     player1 = new Player(player1);
     // opponent = "The Evil Computer";
     opponent = opponentNames[Math.floor(Math.random() * opponentNames.length)];
@@ -61,12 +75,17 @@ startBtn.addEventListener('click', () => {
     opponent = new Computer(opponent);
     infoPanel.innerText = `Welcome ${player1.name}. You will be competing with ${opponent.name}.`;
     startRoundButton.style.visibility = "visible";
+    // subtitle.remove();
+    subtitle.style.display = "none";
     startRoundButton.innerText = `Begin Round ${currentRound}`;
+
 })
+
 startRoundButton.addEventListener('click', () => {
     startRoundButton.style.visibility = "hidden";
     answersContainer.style.visibility = "visible";
     userResponse.style.visibility = "hidden";
+    scoreboard.style.visibility = "visible";
     game.askQuestion();
 })
 
@@ -206,9 +225,9 @@ randomQuestion() {
 
 checkAnswer (chosenAnswer)  {
     // hideBoard.style.visibility = "hidden";
-    // answersContainer.style.visibility = "hidden";
+    answersContainer.style.visibility = "hidden";
     if (chosenAnswer === 'timeUp'){
-        userResponse.innerText = `Oops, you ran out of time!`;
+        userResponse.innerText = `Oops, you ran out of time! The correct answer is ${newQuestionCorrectAnswer}.`;
         computerResponse.innerText = `${opponent.name} has made its choice! It chose ${computerDecision}.`;
         userCorrect = false;
         hideNext.style.visibility = "visible";
@@ -297,32 +316,3 @@ questionPointSummary() {
     
 }
 }
-
-
-
-// randomAnswer() {
-//     let simpleArray = [1,2,3,4];
-//     let reorgArray = [];
-//     let j = 3;
-//     for (let i = 0; i < 4; i++) {
-//         let num = (Math.floor(Math.random() * (j)));
-//         reorgArray.push(num); 
-//     }
-//     j -= 1;
-
-//     console.log(reorgArray);
-// },
-
-
-// randomOrderQuestions(array) {
-//     let currentAnswersIndex = array.length, tempValue, randomIndex;
-//     while (0 !== currentAnswersIndex) {
-//         randomIndex = Math.floor(Math.random() * tempValue);
-//         tempValue -= 1;
-//         tempValue = array[currentAnswersIndex];
-//         array[currentAnswersIndex] = array[randomIndex];
-//         array[randomIndex] = tempValue;
-//     }
-//     // return array;
-//     return array;
-// },

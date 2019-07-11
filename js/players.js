@@ -14,4 +14,4 @@ class Computer {
 
 
 
-const opponentNames = ["The Evil Computer", "The Futuristic Robot", "The Smart Microwave", "The Sweet Cyborg", "The Aggressive Alien", "The Unintelligent A.I."];
+const opponentNames = ["The Evil Computer", "The Futuristic Robot", "The Smart Microwave", "The Sweet Cyborg", "The Aggressive Alien", "The Unintelligent AI"];

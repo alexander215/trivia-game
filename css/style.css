@@ -1,5 +1,6 @@
 .title {
     font-family: 'Special Elite', cursive;
+    padding: 30px 0 0 0;
     /* display: flex; */
     /* max-width: 60%; */
 
@@ -8,9 +9,15 @@ body {
     font-family: 'Oswald', sans-serif;
     margin: 0 auto;
     max-width: 60%;
+    background-image: linear-gradient(90deg, #2B32B2, #1488CC);
+    color: #FFFAFF;
+
 }
-.start-btn{
-    /* display: none; */
+.info-panel {
+    font-family: 'Special Elite', cursive;
+}
+.name-input{
+    visibility: hidden;
 }
 .start-round-btn{
     visibility: hidden;
@@ -18,16 +25,22 @@ body {
 .game-board {
     visibility: hidden;
 }
-.total-score {
-    display: flex;
-    justify-content: flex-end;
+.scoreboard {
+    visibility: hidden;
+    /* display: none; */
+    /* display: flex; */
+    /* justify-content: flex-end; */
+    text-align: right;
+    line-height: 10px;
+    font-size: 20px;
+    font-family: 'Special Elite', cursive;
 }
 .game-stats {
     visibility: hidden;
     display: flex;
-    /* max-width: 60%; */
     justify-content: space-around;
-    /* margin: 0 auto; */
+    text-decoration: underline;
+    font-size: 20px
 }
 
 .response-section {
@@ -42,6 +55,16 @@ body {
     font: h2;
 } */
 .answers {
-    display: inline-flex;
-    flex-wrap: wrap;
+    /* display: inline-flex;
+    flex-wrap: wrap; */
+    /* text-align: center; */
+}
+.btn-primary {
+    /* question buttons */
+    background-color: #F46036;
+
+}
+.btn-info {
+    /* start button */
+    background-color: #F46036;
 }
