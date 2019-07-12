@@ -5,6 +5,11 @@
     /* max-width: 60%; */
 
 }
+.final-score {
+    font-family: 'Special Elite', cursive;
+    font-size: 50px;
+    text-align: center;
+}
 body {
     font-family: 'Oswald', sans-serif;
     margin: 0 auto;

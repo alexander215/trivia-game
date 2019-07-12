@@ -54,6 +54,7 @@ const rulesBtn = document.querySelector('.rules-btn');
 const preGameButtons = document.querySelector('.pre-game-buttons');
 const rules = document.querySelector('.rules');
 const scoreboard = document.querySelector('.scoreboard');
+const finalScore = document.querySelector('.final-score');
 
 rulesBtn.addEventListener('click', () => {
     rules.style.visibility = "visible";
@@ -116,15 +117,15 @@ askQuestion() {
     pointSummary.style.visibility = "hidden";
     if (currentRound === 6) {
         questionNumber = 0;
-        hideBoard.style.visibility = "visible";
+        finalScore.style.visibility = "visible";
         if (player1.score > opponent.score){
             winner = player1.name;
-            hideBoard.innerText = `Game over! ${player1.name} wins ${player1.score} to ${opponent.score}!`;
+            finalScore.innerText = `Game over! ${player1.name} wins ${player1.score} to ${opponent.score}!`;
         } else if (opponent.score > player1.score) {
             winner = opponent.name;
-            hideBoard.innerText = `Game over! ${opponent.name} wins ${opponent.score} to ${player1.score}!`;
+            finalScore.innerText = `Game over! ${opponent.name} wins ${opponent.score} to ${player1.score}!`;
         } else{
-            hideBoard.innerText = `Well look at that, the game was a tie! ${player1.score} to ${opponent.score}!`;
+            finalScore.innerText = `Well look at that, the game was a tie! ${player1.score} to ${opponent.score}!`;
         }
         
     } else {
@@ -258,6 +259,9 @@ computerScoreUpdate() {
 },
 questionPointSummary() {
     pointSummary.style.visibility = "visible";
+    if (roundNumber === 6){
+        answersContainer.style.display = "none";
+    }
     if (questionNumber === 5){
         answersContainer.style.visibility = "hidden";
         questionNumber = 0;
