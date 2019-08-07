@@ -24,11 +24,8 @@ let winner;
 
 // Launch the game, with the board hidden
 const hideBoard = document.querySelector('.game-board');
-// hideBoard.style.visibility = "hidden";
 const hideResponse = document.querySelector('.response-section');
-// hideResponse.style.visibility = "hidden";
 const hideNext = document.querySelector('.next-btn');
-// hideNext.style.visibility = "hidden";
 const gameStats = document.querySelector('.game-stats');
 const roundNumber = document.querySelector('.round-number');
 const roundScorePlayer = document.querySelector('.round-score');
@@ -76,7 +73,6 @@ nameBtn.addEventListener('click', (e) => {
     player1 = nameInputBox.value;
     player1 = new Player(player1);
     opponent = opponentNames[Math.floor(Math.random() * opponentNames.length)];
-    // opponentNames.splice(oppenentNames.indexOf(opponent), 1);
     opponent = new Computer(opponent);
     infoPanel.innerText = `Welcome ${player1.name}. You will be competing with ${opponent.name}.`;
     startRoundButton.style.visibility = "visible";
@@ -105,7 +101,6 @@ hideNext.addEventListener('click', (e) => {
     responseSectionHidden.style.visibility = "hidden";
     hideNext.style.visibility = "hidden";
     answersContainer.style.visibility = "visible";
-    // answersContainer.style.visibility = "hidden";
 
     userResponse.style.visibility = "hidden";
 
@@ -144,7 +139,9 @@ askQuestion() {
     roundNumber.innerText = `Round: ${currentRound}`;
     questionNumberDisplay.innerText = `Question: ${questionNumber} of 5`;
     roundScorePlayer.innerText = `Score: ${playerScore}`;
-    newQuestionSelector = questions[this.randomQuestion()];
+    newQuestionSelector = questions.splice((Math.floor(Math.random() * (questions.length))), 1)[0];
+    // newQuestionSelector = questions[(Math.floor(Math.random() * (questions.length)))];
+    // newQuestionSelector = questions[this.randomQuestion()];
     newQuestionCorrectAnswer = newQuestionSelector.correctAnswer;
     hideBoard.style.visibility = "visible";
     questionDisplay.innerText = newQuestionSelector.question;

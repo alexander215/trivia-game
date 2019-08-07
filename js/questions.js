@@ -34,10 +34,9 @@ const question21 = new Questions("What was the name of the first nuclear submari
 const question22 = new Questions("How did Al Capone make most of his money?", ["Selling alcohol", "Robbing banks", "Printing fake cash", "Making responsible and cautious investments"], "Selling alcohol", "People");
 const question23 = new Questions("When were the first Winter Olympic Games?", ["1807", "1900", "1924", "1964"], "1924", "Sports");
 const question24 = new Questions("Where did Davy Crockett die?", ["New Jersey", "The Alamo", "The El Paso Gunfight", "Shootout at the OK Corral"], "The Alamo", "People");
-const question25 = new Questions("What is the longest river in the world?", ["The Colorado River", "The Lazy River", "The Amazon River", "The Nile River"], "", "");
+const question25 = new Questions("What is the longest river in the world?", ["The Colorado River", "The Lazy River", "The Amazon River", "The Nile River"], "The Nile River", "Geography");
 
-const questions = [question1, question2, question3, question4, question5, question6, question7, question8, question9, question10, question11, question12, question13, question14, question15]
+const questions = [question1, question2, question3, question4, question5, question6, question7, question8, question9, question10, question11, question12, question13, question14, question15, question16, question17, question18, question19, question20, question21, question22, question23, question24,  question25]
 
-// console.log(question1.answers.sort(Math.random()));
+
 // categories: geography, people, dates, science, places, sports
-// const questionNEW = new Questions("", ["", "", "", ""], "", "");
